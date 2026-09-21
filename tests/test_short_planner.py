@@ -20,3 +20,21 @@ def test_batch_is_five_and_unique(tmp_path):
     assert len(plans) == 5
     assert len({plan.signature for plan in plans}) == 5
 
+
+def test_scan_assets_accepts_uppercase_letter_folders(tmp_path):
+    image_dir = tmp_path / "assets" / "real_png" / "A"
+    teacher_dir = tmp_path / "assets" / "voices" / "teacher" / "A"
+    student_dir = tmp_path / "assets" / "voices" / "student_voice" / "A"
+    image_dir.mkdir(parents=True)
+    teacher_dir.mkdir(parents=True)
+    student_dir.mkdir(parents=True)
+    (image_dir / "apple.png").touch()
+    (teacher_dir / "apple.mp3").touch()
+    (student_dir / "apple.mp3").touch()
+
+    assets = scan_assets(tmp_path)
+
+    assert len(assets) == 1
+    assert assets[0].letter == "a"
+    assert assets[0].teacher_voice == teacher_dir / "apple.mp3"
+    assert assets[0].student_voice == student_dir / "apple.mp3"

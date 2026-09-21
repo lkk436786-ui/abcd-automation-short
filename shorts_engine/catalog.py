@@ -35,16 +35,28 @@ def _files_by_key(folder: Path) -> dict[str, Path]:
     return result
 
 
+def _letter_folder(root: Path, letter: str) -> Path:
+    """Resolve asset folders on both case-sensitive and case-insensitive hosts."""
+    for candidate in (root / letter, root / letter.upper()):
+        if candidate.is_dir():
+            return candidate
+    return root / letter
+
+
 def scan_assets(project_root: Path) -> list[Asset]:
     root = project_root / "assets"
     image_root = root / "real_png"
     teacher_root = root / "voices" / "teacher"
     student_root = root / "voices" / "student_voice"
     assets: list[Asset] = []
-    for letter_dir in sorted(image_root.glob("[a-z]")):
+    letter_dirs = [
+        path for path in image_root.iterdir()
+        if path.is_dir() and len(path.name) == 1 and path.name.isalpha()
+    ] if image_root.is_dir() else []
+    for letter_dir in sorted(letter_dirs, key=lambda path: path.name.lower()):
         letter = letter_dir.name.lower()
-        teachers = _files_by_key(teacher_root / letter)
-        students = _files_by_key(student_root / letter)
+        teachers = _files_by_key(_letter_folder(teacher_root, letter))
+        students = _files_by_key(_letter_folder(student_root, letter))
         for image in sorted(letter_dir.iterdir()):
             if not image.is_file() or image.suffix.lower() not in {".png", ".jpg", ".jpeg", ".webp"}:
                 continue
