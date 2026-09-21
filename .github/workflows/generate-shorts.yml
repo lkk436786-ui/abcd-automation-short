@@ -54,13 +54,33 @@ jobs:
 
       - name: Materialize LFS assets
         if: steps.gate.outputs.run == 'true'
+        shell: bash
         run: |
+          set -euo pipefail
           git lfs install --local
-          if [ "${{ steps.lfs-cache.outputs.cache-hit }}" = "true" ]; then
-            git lfs checkout
-          else
-            git lfs pull
-          fi
+          # Always fetch the current revision. A restored cache may contain
+          # only pointer metadata or an incomplete object set.
+          git lfs pull origin "${GITHUB_REF_NAME:-main}"
+          git lfs checkout
+
+          test -d assets/real_png
+          python - <<'PY'
+          from pathlib import Path
+
+          root = Path("assets/real_png")
+          files = sorted(root.rglob("*"))
+          images = [p for p in files if p.is_file() and p.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp"}]
+          bad = []
+          for path in images:
+              header = path.read_bytes()[:8]
+              if path.suffix.lower() == ".png" and header != b"\x89PNG\r\n\x1a\n":
+                  bad.append(str(path))
+          print(f"Materialized {len(images)} image assets")
+          if len(images) == 0:
+              raise SystemExit("No image assets were materialized under assets/real_png")
+          if bad:
+              raise SystemExit("LFS pointer files remain instead of PNG data: " + ", ".join(bad[:10]))
+          PY
 
       - name: Install FFmpeg and fonts
         if: steps.gate.outputs.run == 'true'
