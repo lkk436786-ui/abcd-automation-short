@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+client_secret*.json
+youtube_token*.json
+outputs/
+shorts_outputs/
+logs/
+tmp/
+.shorts_work/*.tmp
