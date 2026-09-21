@@ -8,6 +8,9 @@ from zoneinfo import ZoneInfo
 from .history import read_json
 
 
+LONG_VIDEO_SLOTS_IST = ((4, 17), (5, 17), (6, 17), (10, 47), (11, 47), (12, 47), (15, 38), (16, 38), (17, 38))
+
+
 def _uploaded_count(history: dict, day: str) -> int:
     return sum(1 for item in history.get("shorts", []) if item.get("date") == day and item.get("status") == "uploaded")
 
@@ -47,16 +50,16 @@ def main() -> int:
         run_date = min(pending)
         should_run = True
         target_hour = now.hour
+        target_minute = now.minute
     else:
-        # GitHub invokes at :47 IST in these twelve windows: 01:47, 03:47,
-        # 05:47, ..., 23:47. Keep the chosen window stable for retries.
-        scheduled_hours_ist = [(5 + (2 * index)) % 24 for index in range(12)]
-        target_hour = scheduled_hours_ist[int(hashlib.sha256(today_key.encode()).hexdigest()[:8], 16) % len(scheduled_hours_ist)]
+        # Match the long-video workflow's publishing slots. Keep one selected
+        # slot stable for the whole day so retries do not create duplicates.
+        target_hour, target_minute = LONG_VIDEO_SLOTS_IST[int(hashlib.sha256(today_key.encode()).hexdigest()[:8], 16) % len(LONG_VIDEO_SLOTS_IST)]
         run_date = today_key
-        should_run = now.hour >= target_hour and uploaded_today < 5
+        should_run = (now.hour, now.minute) >= (target_hour, target_minute) and uploaded_today < 5
     print(f"run={'true' if should_run else 'false'}")
     print(f"run_date={run_date}")
-    print(f"target_hour_ist={target_hour:02d}:47")
+    print(f"target_hour_ist={target_hour:02d}:{target_minute:02d}")
     print(f"uploaded_today={uploaded_today}")
     return 0
 

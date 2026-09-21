@@ -5,7 +5,25 @@ on:
     paths-ignore:
       - ".shorts_work/**"
   schedule:
-    - cron: "17 0,2,4,6,8,10,12,14,16,18,20,22 * * *"
+    # Match the long-video publishing windows (Asia/Kolkata).
+    - cron: "17 4 * * *"
+      timezone: "Asia/Kolkata"
+    - cron: "17 5 * * *"
+      timezone: "Asia/Kolkata"
+    - cron: "17 6 * * *"
+      timezone: "Asia/Kolkata"
+    - cron: "47 10 * * *"
+      timezone: "Asia/Kolkata"
+    - cron: "47 11 * * *"
+      timezone: "Asia/Kolkata"
+    - cron: "47 12 * * *"
+      timezone: "Asia/Kolkata"
+    - cron: "38 15 * * *"
+      timezone: "Asia/Kolkata"
+    - cron: "38 16 * * *"
+      timezone: "Asia/Kolkata"
+    - cron: "38 17 * * *"
+      timezone: "Asia/Kolkata"
   workflow_dispatch:
     inputs:
       privacy_status:
