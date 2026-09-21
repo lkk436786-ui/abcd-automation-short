@@ -1,4 +1,4 @@
-from shorts_engine.youtube import SHORT_HASHTAGS, _shorts_description, _video_metadata
+from shorts_engine.youtube import BILINGUAL_DESCRIPTION, SHORT_HASHTAGS, _shorts_description, _video_metadata
 
 
 def test_description_contains_multiple_short_hashtags():
@@ -8,6 +8,7 @@ def test_description_contains_multiple_short_hashtags():
     assert description.count("#") >= 6
     assert "#Shorts" in description
     assert "#KidsLearning" in description
+    assert BILINGUAL_DESCRIPTION in description
 
 
 def test_metadata_marks_short_content_with_tags():
@@ -15,4 +16,5 @@ def test_metadata_marks_short_content_with_tags():
 
     assert metadata["snippet"]["description"].endswith(SHORT_HASHTAGS)
     assert "Shorts" in metadata["snippet"]["tags"]
+    assert "Hindi learning" in metadata["snippet"]["tags"]
     assert metadata["status"]["selfDeclaredMadeForKids"] is True

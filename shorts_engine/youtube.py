@@ -14,6 +14,7 @@ from googleapiclient.http import MediaFileUpload
 
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 SHORT_HASHTAGS = "#Shorts #KidsShorts #Phonics #KidsLearning #EducationalShorts #LearnWithMe"
+BILINGUAL_DESCRIPTION = "Learn English words with clear pictures. बच्चों के लिए English words और pronunciation सीखें।"
 
 
 def _credentials() -> Credentials:
@@ -29,7 +30,8 @@ def _credentials() -> Credentials:
 
 def _shorts_description(description: str) -> str:
     body = description.strip()
-    return f"{body}\n\n{SHORT_HASHTAGS}" if body else SHORT_HASHTAGS
+    parts = [part for part in (body, BILINGUAL_DESCRIPTION, SHORT_HASHTAGS) if part]
+    return "\n\n".join(parts)
 
 
 def _video_metadata(title: str, description: str, privacy_status: str) -> dict:
@@ -38,7 +40,7 @@ def _video_metadata(title: str, description: str, privacy_status: str) -> dict:
             "title": title[:100],
             "description": _shorts_description(description),
             "categoryId": "27",
-            "tags": ["kids", "phonics", "education", "Shorts", "KidsShorts"],
+            "tags": ["kids", "phonics", "education", "Shorts", "KidsShorts", "English for kids", "Hindi learning"],
         },
         "status": {"privacyStatus": privacy_status, "selfDeclaredMadeForKids": True},
     }

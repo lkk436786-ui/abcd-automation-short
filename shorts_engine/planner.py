@@ -64,25 +64,25 @@ def plan_batch(assets: list[Asset], history_path, count: int = 5, on_date: date 
                     letter = chr(ord("a") + start + offset)
                     candidates = [asset for asset in assets if asset.letter == letter]
                     chosen.append(rng.choice(candidates or assets))
-                title = f"Learn ABC with {chosen[0].name}, {chosen[1].name} & More | Sing Along #Shorts"
+                title = f"{chosen[0].letter.upper()} for {chosen[0].name} | {chosen[0].letter.upper()} से {chosen[0].name} सीखें | ABC for Kids #Shorts"
             elif theme == "count":
                 pool = _pool(assets, THEME_POOLS["fruits"])
                 chosen = rng.sample(pool, min(4, len(pool)))
-                title = f"Count to 10 with {chosen[0].name}s! | Kids Counting Song #Shorts"
+                title = f"Count with {chosen[0].name}s | {chosen[0].name} की गिनती सीखें | Kids Counting #Shorts"
             elif theme == "vehicles":
                 pool = _pool(assets, THEME_POOLS["vehicles"])
                 chosen = rng.sample(pool, min(4, len(pool)))
-                title = "Sing Along with Vehicles! | Kids Song #Shorts"
+                title = f"Vehicle Names for Kids | गाड़ियों के नाम सीखें | {chosen[0].name} #Shorts"
             elif theme == "animals":
                 pool = _pool(assets, THEME_POOLS["animals"])
                 chosen = rng.sample(pool, min(4, len(pool)))
-                title = "What Animal Is This? | Kids Quiz #Shorts"
+                title = f"Animal Names for Kids | जानवरों के नाम सीखें | {chosen[0].name} #Shorts"
             elif theme == "colors":
                 chosen = rng.sample(assets, min(4, len(assets)))
-                title = f"Paint the {chosen[0].name}! | Learn Colors for Kids #Shorts"
+                title = f"Learn Colors for Kids | रंगों के नाम सीखें | {chosen[0].name} #Shorts"
             else:
                 chosen = rng.sample(assets, min(4, len(assets)))
-                title = "Can You Guess These? | Kids Quiz #Shorts"
+                title = f"Guess the Word | शब्द पहचानो | {chosen[0].name} #Shorts"
             signature = _signature(theme, chosen, style)
             if signature in known or any(plan.signature == signature for plan in result):
                 continue
@@ -92,4 +92,3 @@ def plan_batch(assets: list[Asset], history_path, count: int = 5, on_date: date 
             raise RuntimeError("Could not find a non-repeating Shorts plan after 200 attempts")
         result.append(made)
     return result
-
