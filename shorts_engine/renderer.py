@@ -38,7 +38,7 @@ def _choose_file(folder: Path, index: int, suffixes: set[str]) -> Path | None:
     return files[index % len(files)] if files else None
 
 
-def _scene(project_root: Path, asset: Asset, title: str, subtitle: str, output: Path, scene_index: int, style_index: int) -> None:
+def _scene(project_root: Path, asset: Asset, output: Path, scene_index: int, style_index: int) -> None:
     background_dir = project_root / "assets" / "backrounds"
     music_dir = project_root / "assets" / "back_musics"
     background = _choose_file(background_dir, style_index * 11 + scene_index * 7, {".png", ".jpg", ".jpeg", ".webp"})
@@ -52,14 +52,16 @@ def _scene(project_root: Path, asset: Asset, title: str, subtitle: str, output: 
     length = min(8.0, max(4.8, student_start + student_duration + 0.25))
     x = 160 + (scene_index % 2) * 40
     font = _font()
+    letter = _quote(asset.letter.upper())
+    word = _quote(asset.name.upper())
+    word_fontsize = max(48, min(78, round(900 / max(len(asset.name), 1))))
     vf = (
         "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=2:1[bg];"
         "[1:v]format=rgba,scale=780:780:force_original_aspect_ratio=decrease[fg];"
         f"[bg][fg]overlay=x={x}+18*sin(2*PI*t/{length:.3f}):y=445+12*cos(2*PI*t/{length:.3f})[base];"
-        "[base]drawbox=x=45:y=70:w=990:h=185:color=0x18233bEE:t=fill,"
-        f"drawtext=fontfile='{font}':text='{_quote(title)}':fontcolor=white:fontsize=48:x=(w-text_w)/2:y=115,"
-        "drawbox=x=90:y=1330:w=900:h=300:color=0xFFF4C4DD:t=fill,"
-        f"drawtext=fontfile='{font}':text='{_quote(subtitle)}':fontcolor=0x17213B:fontsize=58:x=(w-text_w)/2:y=1435[v];"
+        # Keep the content intentionally simple: LETTER + object PNG + WORD.
+        f"[base]drawtext=fontfile='{font}':text='{letter}':fontcolor=white:fontsize=300:borderw=8:bordercolor=0x18233B:x=(w-text_w)/2:y=95,"
+        f"drawtext=fontfile='{font}':text='{word}':fontcolor=white:fontsize={word_fontsize}:borderw=5:bordercolor=0x18233B:x=(w-text_w)/2:y=1510[v];"
         f"[2:a]aresample=48000,atrim=duration={teacher_duration:.3f},asetpts=PTS-STARTPTS,afade=t=out:st={max(0.0, teacher_duration-0.20):.3f}:d=0.20[teacher];"
         f"[3:a]aresample=48000,atrim=duration={student_duration:.3f},asetpts=PTS-STARTPTS,adelay={round(student_start * 1000)}:all=1[student];"
         f"[4:a]aresample=48000,volume=0.24,atrim=duration={length:.3f},asetpts=PTS-STARTPTS[music];"
@@ -80,20 +82,8 @@ def render_plan(project_root: Path, plan: ShortPlan, output: Path, keep_temporar
     workdir.mkdir(parents=True, exist_ok=True)
     scenes: list[Path] = []
     for index, asset in enumerate(plan.assets):
-        if plan.theme == "abc":
-            subtitle, title = f"{asset.letter.upper()} for {asset.name}", "LEARN ABC"
-        elif plan.theme == "count":
-            subtitle, title = f"{index + 1} {asset.name}", "COUNT WITH ME!"
-        elif plan.theme == "vehicles":
-            subtitle, title = f"VROOM! {asset.name}", "VEHICLE SONG"
-        elif plan.theme == "animals":
-            subtitle, title = f"THIS IS A {asset.name.upper()}!", "GUESS THE ANIMAL"
-        elif plan.theme == "colors":
-            subtitle, title = f"COLOR THE {asset.name.upper()}", "LEARN COLORS"
-        else:
-            subtitle, title = f"SAY {asset.name.upper()}!", "GUESS IT!"
         scene = workdir / f"scene-{index:02d}.mp4"
-        _scene(project_root, asset, title, subtitle, scene, index, plan.style_index)
+        _scene(project_root, asset, scene, index, plan.style_index)
         scenes.append(scene)
     concat = workdir / "concat.txt"
     concat.write_text("".join(f"file '{scene.as_posix()}'\n" for scene in scenes), encoding="utf-8")
