@@ -35,6 +35,6 @@ python -m pytest -q
 python -m shorts_engine.main --count 5 --dry-run
 ```
 
-The scheduled workflow runs once per day at 07:17 UTC (12:47 PM India time) and uploads five Shorts. It does not alter the long-video workflow.
+The workflow checks twelve two-hour windows at minute :47 India time, chooses one stable pseudo-random window per day, and uploads five Shorts automatically. If a run fails or only uploads part of the batch, the next window resumes the same batch without re-uploading successful items. A push to the default branch can also start the eligible run for the current day, so daily manual workflow runs are not required.
 
 The workflow caches Git LFS objects so the roughly 505 MB asset library is not downloaded from LFS on every run. GitHub’s cache can still be evicted, so this reduces bandwidth but cannot remove GitHub’s storage/bandwidth limits.

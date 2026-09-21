@@ -10,7 +10,10 @@ from .planner import ShortPlan
 
 
 def _run(args: list[str]) -> None:
-    subprocess.run(args, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    result = subprocess.run(args, check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if result.returncode:
+        detail = result.stderr.strip().splitlines()[-8:]
+        raise RuntimeError("FFmpeg failed: " + " | ".join(detail))
 
 
 def _duration(path: Path, fallback: float = 1.8) -> float:
@@ -30,15 +33,23 @@ def _font() -> str:
     return str(next((item for item in candidates if item.exists()), candidates[0])).replace("\\", "/").replace(":", "\\:")
 
 
-def _scene(project_root: Path, asset: Asset, title: str, subtitle: str, output: Path, scene_index: int) -> None:
+def _choose_file(folder: Path, index: int, suffixes: set[str]) -> Path | None:
+    files = sorted(path for path in folder.iterdir() if path.is_file() and path.suffix.lower() in suffixes) if folder.exists() else []
+    return files[index % len(files)] if files else None
+
+
+def _scene(project_root: Path, asset: Asset, title: str, subtitle: str, output: Path, scene_index: int, style_index: int) -> None:
     background_dir = project_root / "assets" / "backrounds"
     music_dir = project_root / "assets" / "back_musics"
-    background = next(iter(sorted(background_dir.glob("*"))), None)
-    music = next(iter(sorted(music_dir.glob("*"))), None)
+    background = _choose_file(background_dir, style_index * 11 + scene_index * 7, {".png", ".jpg", ".jpeg", ".webp"})
+    music = _choose_file(music_dir, style_index * 5 + scene_index, {".mp3", ".wav", ".m4a", ".aac", ".flac", ".ogg"})
     if background is None or music is None or asset.teacher_voice is None:
         raise RuntimeError(f"Missing background/music/teacher voice for {asset.name}")
     student = asset.student_voice or asset.teacher_voice
-    length = min(5.2, max(4.0, _duration(asset.teacher_voice, 1.8) + _duration(student, 1.4) + 0.55))
+    teacher_duration = _duration(asset.teacher_voice, 1.8)
+    student_duration = _duration(student, 1.4)
+    student_start = teacher_duration + 0.30
+    length = min(8.0, max(4.8, student_start + student_duration + 0.25))
     x = 160 + (scene_index % 2) * 40
     font = _font()
     vf = (
@@ -49,10 +60,12 @@ def _scene(project_root: Path, asset: Asset, title: str, subtitle: str, output: 
         f"drawtext=fontfile='{font}':text='{_quote(title)}':fontcolor=white:fontsize=48:x=(w-text_w)/2:y=115,"
         "drawbox=x=90:y=1330:w=900:h=300:color=0xFFF4C4DD:t=fill,"
         f"drawtext=fontfile='{font}':text='{_quote(subtitle)}':fontcolor=0x17213B:fontsize=58:x=(w-text_w)/2:y=1435[v];"
-        f"[2:a]aresample=48000,atrim=duration={length:.3f},afade=t=out:st={max(0.0, length-0.35):.3f}:d=0.35[teacher];"
-        f"[3:a]aresample=48000,adelay=450|450,atrim=duration={length:.3f}[student];"
-        f"[4:a]aresample=48000,volume=0.10,atrim=duration={length:.3f}[music];"
-        "[teacher][student][music]amix=inputs=3:duration=longest:dropout_transition=0,alimiter=limit=0.95[a]"
+        f"[2:a]aresample=48000,atrim=duration={teacher_duration:.3f},asetpts=PTS-STARTPTS,afade=t=out:st={max(0.0, teacher_duration-0.20):.3f}:d=0.20[teacher];"
+        f"[3:a]aresample=48000,atrim=duration={student_duration:.3f},asetpts=PTS-STARTPTS,adelay={round(student_start * 1000)}:all=1[student];"
+        f"[4:a]aresample=48000,volume=0.24,atrim=duration={length:.3f},asetpts=PTS-STARTPTS[music];"
+        f"[teacher][student]amix=inputs=2:duration=longest:dropout_transition=0:normalize=0,volume=0.82,apad,atrim=duration={length:.3f}[voicebus];"
+        f"[music]apad,atrim=duration={length:.3f}[musicpad];"
+        "[voicebus][musicpad]amix=inputs=2:duration=longest:dropout_transition=0:normalize=0,alimiter=limit=0.95[a]"
     )
     _run([
         "ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-loop", "1", "-framerate", "30", "-i", str(background),
@@ -74,13 +87,13 @@ def render_plan(project_root: Path, plan: ShortPlan, output: Path, keep_temporar
         elif plan.theme == "vehicles":
             subtitle, title = f"VROOM! {asset.name}", "VEHICLE SONG"
         elif plan.theme == "animals":
-            subtitle, title = f"IT'S A {asset.name.upper()}!", "GUESS THE ANIMAL"
+            subtitle, title = f"THIS IS A {asset.name.upper()}!", "GUESS THE ANIMAL"
         elif plan.theme == "colors":
             subtitle, title = f"COLOR THE {asset.name.upper()}", "LEARN COLORS"
         else:
             subtitle, title = f"SAY {asset.name.upper()}!", "GUESS IT!"
         scene = workdir / f"scene-{index:02d}.mp4"
-        _scene(project_root, asset, title, subtitle, scene, index)
+        _scene(project_root, asset, title, subtitle, scene, index, plan.style_index)
         scenes.append(scene)
     concat = workdir / "concat.txt"
     concat.write_text("".join(f"file '{scene.as_posix()}'\n" for scene in scenes), encoding="utf-8")
@@ -90,4 +103,3 @@ def render_plan(project_root: Path, plan: ShortPlan, output: Path, keep_temporar
     if not keep_temporary:
         shutil.rmtree(workdir, ignore_errors=True)
     return manifest
-
