@@ -1,0 +1,97 @@
+{
+  "date": "2026-09-22",
+  "plans": [
+    {
+      "signature": "quiz|ukulele,xenops,zinnia,onion|style-1",
+      "theme": "quiz",
+      "title": "Guess the Word | शब्द पहचानो | Ukulele #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 1,
+      "asset_keys": [
+        "ukulele",
+        "xenops",
+        "zinnia",
+        "onion"
+      ]
+    },
+    {
+      "signature": "abc|robot,sunflower,tree,ukulele|style-2",
+      "theme": "abc",
+      "title": "R for Robot | R से Robot सीखें | ABC for Kids #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 2,
+      "asset_keys": [
+        "robot",
+        "sunflower",
+        "tree",
+        "ukulele"
+      ]
+    },
+    {
+      "signature": "count|apple,grapes,tomato,mango|style-3",
+      "theme": "count",
+      "title": "Count with Apples | Apple की गिनती सीखें | Kids Counting #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 3,
+      "asset_keys": [
+        "apple",
+        "grapes",
+        "tomato",
+        "mango"
+      ]
+    },
+    {
+      "signature": "vehicles|car,firetruck,van,jeep|style-0",
+      "theme": "vehicles",
+      "title": "Vehicle Names for Kids | गाड़ियों के नाम सीखें | Car #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 0,
+      "asset_keys": [
+        "car",
+        "firetruck",
+        "van",
+        "jeep"
+      ]
+    },
+    {
+      "signature": "animals|turtle,dolphin,koala,rabbit|style-1",
+      "theme": "animals",
+      "title": "Animal Names for Kids | जानवरों के नाम सीखें | Turtle #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 1,
+      "asset_keys": [
+        "turtle",
+        "dolphin",
+        "koala",
+        "rabbit"
+      ]
+    }
+  ],
+  "status": {
+    "quiz|ukulele,xenops,zinnia,onion|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "rka6xLllQJk",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-22/short-01.mp4"
+    },
+    "abc|robot,sunflower,tree,ukulele|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "VKCRn6tlw2I",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-22/short-02.mp4"
+    },
+    "count|apple,grapes,tomato,mango|style-3": {
+      "status": "uploaded",
+      "youtube_video_id": "04Qe04c8BiQ",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-22/short-03.mp4"
+    },
+    "vehicles|car,firetruck,van,jeep|style-0": {
+      "status": "uploaded",
+      "youtube_video_id": "sDOZ_gfrdsI",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-22/short-04.mp4"
+    },
+    "animals|turtle,dolphin,koala,rabbit|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "_K4swQcc7l0",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-22/short-05.mp4"
+    }
+  }
+}
