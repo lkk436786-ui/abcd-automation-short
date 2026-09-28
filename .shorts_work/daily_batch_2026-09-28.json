@@ -1,0 +1,97 @@
+{
+  "date": "2026-09-28",
+  "plans": [
+    {
+      "signature": "quiz|apple,turtle,earth,monkey|style-2",
+      "theme": "quiz",
+      "title": "Guess the Word | शब्द पहचानो | Apple #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 2,
+      "asset_keys": [
+        "apple",
+        "turtle",
+        "earth",
+        "monkey"
+      ]
+    },
+    {
+      "signature": "abc|candle,dog,earth,flower|style-3",
+      "theme": "abc",
+      "title": "C for Candle | C से Candle सीखें | ABC for Kids #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 3,
+      "asset_keys": [
+        "candle",
+        "dog",
+        "earth",
+        "flower"
+      ]
+    },
+    {
+      "signature": "count|lemon,apple,pineapple,watermelon|style-0",
+      "theme": "count",
+      "title": "Count with Lemons | Lemon की गिनती सीखें | Kids Counting #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 0,
+      "asset_keys": [
+        "lemon",
+        "apple",
+        "pineapple",
+        "watermelon"
+      ]
+    },
+    {
+      "signature": "vehicles|motorcycle,van,scooter,train|style-1",
+      "theme": "vehicles",
+      "title": "Vehicle Names for Kids | गाड़ियों के नाम सीखें | Motorcycle #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 1,
+      "asset_keys": [
+        "motorcycle",
+        "van",
+        "scooter",
+        "train"
+      ]
+    },
+    {
+      "signature": "animals|cat,koala,elephant,horse|style-2",
+      "theme": "animals",
+      "title": "Animal Names for Kids | जानवरों के नाम सीखें | Cat #Shorts",
+      "description": "Fun, original phonics practice for children. Learn, sing, and say each word aloud! #Shorts",
+      "style_index": 2,
+      "asset_keys": [
+        "cat",
+        "koala",
+        "elephant",
+        "horse"
+      ]
+    }
+  ],
+  "status": {
+    "quiz|apple,turtle,earth,monkey|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "aa2M4vArR9E",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-28/short-01.mp4"
+    },
+    "abc|candle,dog,earth,flower|style-3": {
+      "status": "uploaded",
+      "youtube_video_id": "H6ahYeYjKtc",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-28/short-02.mp4"
+    },
+    "count|lemon,apple,pineapple,watermelon|style-0": {
+      "status": "uploaded",
+      "youtube_video_id": "C6yu5gGkX1E",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-28/short-03.mp4"
+    },
+    "vehicles|motorcycle,van,scooter,train|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "2Vq4n9zuItw",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-28/short-04.mp4"
+    },
+    "animals|cat,koala,elephant,horse|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "Y3XuuYRSals",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-09-28/short-05.mp4"
+    }
+  }
+}
