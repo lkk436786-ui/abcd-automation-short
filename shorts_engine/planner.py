@@ -87,16 +87,10 @@ def plan_batch(assets: list[Asset], history_path, count: int = 5, on_date: date 
                 chosen = rng.sample(_pool(assets, THEME_POOLS["animals"]), min(4, len(_pool(assets, THEME_POOLS["animals"]))))
             else:
                 chosen = rng.sample(assets, min(4, len(assets)))
-            # ALL themes use the exact reference channel title format:
-            # "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short"
-            l0, l1, l2, l3 = chosen[0], chosen[1], chosen[2], chosen[3]
-            n0, n1, n2, n3 = l0.name.lower(), l1.name.lower(), l2.name.lower(), l3.name.lower()
-            hindi = _HINDI.get(l0.letter.lower(), '')
-            sequence = f"{l0.letter} for {n0} {l1.letter} for {n1} {l2.letter} for {n2}"
-            title = f"{l0.letter.upper()} for {n0} | {hindi} | abcd | phonics song | {sequence} #shorts #short"
+            # Fixed title and description — same for every video, matching reference channel exactly
+            title = "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short"
             desc = (
-                f"{l0.letter.upper()} for {n0} | {l1.letter.upper()} for {n1} | "
-                f"{l2.letter.upper()} for {n2} | {l3.letter.upper()} for {n3}\n\n"
+                "A for apple | B for ball | C for cat | D for dog\n\n"
                 f"{_DESC_TAGS}"
             )
             signature = _signature(theme, chosen, style)

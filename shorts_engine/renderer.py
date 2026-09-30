@@ -205,7 +205,9 @@ def render_plan(project_root: Path, plan: ShortPlan, output: Path, keep_temporar
     _run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(concat), "-c", "copy", "-movflags", "+faststart", str(main_tmp)])
     _append_fixed_thumbnail(project_root, main_tmp, output)
     main_tmp.unlink(missing_ok=True)
-    thumbnail = render_thumbnail(project_root, plan, output.parent)
+    # Use the fixed brand thumbnail for YouTube thumbnail upload — same image appended as last second
+    fixed_thumb = project_root / "assets" / "short_thumbnail.png"
+    thumbnail = fixed_thumb if fixed_thumb.exists() else render_thumbnail(project_root, plan, output.parent)
     manifest = {"signature": plan.signature, "title": plan.title, "theme": plan.theme, "output": str(output), "thumbnail": str(thumbnail), "assets": [asset.name for asset in plan.assets]}
     output.with_suffix(".json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     if not keep_temporary:
