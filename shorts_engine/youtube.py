@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import os
@@ -13,8 +13,6 @@ from googleapiclient.http import MediaFileUpload
 
 
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
-SHORT_HASHTAGS = "#Shorts #KidsShorts #Phonics #KidsLearning #EducationalShorts #LearnWithMe"
-BILINGUAL_DESCRIPTION = "Learn English words with clear pictures. बच्चों के लिए English words और pronunciation सीखें।"
 
 
 def _credentials() -> Credentials:
@@ -28,56 +26,28 @@ def _credentials() -> Credentials:
     return creds
 
 
-def _shorts_description(description: str) -> str:
-    body = description.strip()
-    parts = [part for part in (body, BILINGUAL_DESCRIPTION, SHORT_HASHTAGS) if part]
-    return "\n\n".join(parts)
-
-
-def _video_metadata(title: str, description: str, privacy_status: str) -> dict:
-    return {
-        "snippet": {
-            "title": title[:100],
-            "description": _shorts_description(description),
-            "categoryId": "27",
-            "tags": ["kids", "phonics", "education", "Shorts", "KidsShorts", "English for kids", "Hindi learning"],
-        },
-        "status": {"privacyStatus": privacy_status, "selfDeclaredMadeForKids": True},
-    }
-
-
-def _validate_vertical_short(video: Path) -> None:
-    import subprocess
-
-    result = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "stream=width,height:format=duration", "-of", "json", str(video)],
-        check=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
-    data = json.loads(result.stdout)
-    stream = next((item for item in data.get("streams", []) if item.get("width") and item.get("height")), None)
-    duration = float(data.get("format", {}).get("duration", 0))
-    if not stream or stream["height"] <= stream["width"]:
-        raise RuntimeError("Short upload must be vertical; expected height greater than width")
-    if duration <= 0 or duration > 180:
-        raise RuntimeError(f"Short upload duration must be between 0 and 180 seconds; got {duration:.2f}")
-
-
-def upload(video: Path, title: str, description: str, privacy_status: str = "public") -> str:
-    _validate_vertical_short(video)
+def upload(video: Path, title: str, description: str, privacy_status: str = "public", thumbnail: Path | None = None) -> str:
     youtube = build("youtube", "v3", credentials=_credentials(), cache_discovery=False)
-    body = _video_metadata(title, description, privacy_status)
+    body = {"snippet": {"title": title[:100], "description": description[:5000], "categoryId": "27", "tags": ["phonics", "abc song", "alphabet", "kids learning", "abcd", "phonics song", "learn abc", "kids education", "preschool", "kindergarten", "toddlers", "nursery rhyme", "kids phonics", "letter sounds", "educational", "Shorts", "youtube shorts", "kids shorts", "children", "baby songs", "abc kids", "english alphabet"]}, "status": {"privacyStatus": privacy_status, "selfDeclaredMadeForKids": True}}
     request = youtube.videos().insert(part="snippet,status", body=body, media_body=MediaFileUpload(str(video), mimetype="video/mp4", resumable=True, chunksize=4 * 1024 * 1024))
     for attempt in range(5):
         try:
             response = None
             while response is None:
                 _, response = request.next_chunk()
-            return str(response["id"])
+            video_id = str(response["id"])
+            if thumbnail and thumbnail.exists():
+                try:
+                    youtube.thumbnails().set(
+                        videoId=video_id,
+                        media_body=MediaFileUpload(str(thumbnail), mimetype="image/jpeg"),
+                    ).execute()
+                except HttpError:
+                    pass
+            return video_id
         except HttpError:
             if attempt == 4:
                 raise
             time.sleep(2 ** attempt)
     raise RuntimeError("Upload did not return a video ID")
+

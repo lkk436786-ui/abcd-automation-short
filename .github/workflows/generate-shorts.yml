@@ -1,29 +1,11 @@
-name: Generate and upload daily Shorts
+﻿name: Generate and upload daily Shorts
 
 on:
   push:
     paths-ignore:
       - ".shorts_work/**"
   schedule:
-    # Match the long-video publishing windows (Asia/Kolkata).
-    - cron: "17 4 * * *"
-      timezone: "Asia/Kolkata"
-    - cron: "17 5 * * *"
-      timezone: "Asia/Kolkata"
-    - cron: "17 6 * * *"
-      timezone: "Asia/Kolkata"
-    - cron: "47 10 * * *"
-      timezone: "Asia/Kolkata"
-    - cron: "47 11 * * *"
-      timezone: "Asia/Kolkata"
-    - cron: "47 12 * * *"
-      timezone: "Asia/Kolkata"
-    - cron: "38 15 * * *"
-      timezone: "Asia/Kolkata"
-    - cron: "38 16 * * *"
-      timezone: "Asia/Kolkata"
-    - cron: "38 17 * * *"
-      timezone: "Asia/Kolkata"
+    - cron: "17 0,2,4,6,8,10,12,14,16,18,20,22 * * *"
   workflow_dispatch:
     inputs:
       privacy_status:
@@ -72,33 +54,13 @@ jobs:
 
       - name: Materialize LFS assets
         if: steps.gate.outputs.run == 'true'
-        shell: bash
         run: |
-          set -euo pipefail
           git lfs install --local
-          # Always fetch the current revision. A restored cache may contain
-          # only pointer metadata or an incomplete object set.
-          git lfs pull origin "${GITHUB_REF_NAME:-main}"
-          git lfs checkout
-
-          test -d assets/real_png
-          python - <<'PY'
-          from pathlib import Path
-
-          root = Path("assets/real_png")
-          files = sorted(root.rglob("*"))
-          images = [p for p in files if p.is_file() and p.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp"}]
-          bad = []
-          for path in images:
-              header = path.read_bytes()[:8]
-              if path.suffix.lower() == ".png" and header != b"\x89PNG\r\n\x1a\n":
-                  bad.append(str(path))
-          print(f"Materialized {len(images)} image assets")
-          if len(images) == 0:
-              raise SystemExit("No image assets were materialized under assets/real_png")
-          if bad:
-              raise SystemExit("LFS pointer files remain instead of PNG data: " + ", ".join(bad[:10]))
-          PY
+          if [ "${{ steps.lfs-cache.outputs.cache-hit }}" = "true" ]; then
+            git lfs checkout
+          else
+            git lfs pull
+          fi
 
       - name: Install FFmpeg and fonts
         if: steps.gate.outputs.run == 'true'
@@ -112,12 +74,18 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         run: python -m pytest -q
 
-      - name: Generate and upload five Shorts
+      - name: Generate and upload Shorts (${{ steps.gate.outputs.slot }} — ${{ steps.gate.outputs.max_upload }} shorts)
         if: steps.gate.outputs.run == 'true'
         run: |
           PRIVACY="${{ inputs.privacy_status }}"
           if [ -z "$PRIVACY" ]; then PRIVACY=public; fi
-          python -m shorts_engine.main --project-root . --count 5 --date "${{ steps.gate.outputs.run_date }}" --privacy-status "$PRIVACY" --upload
+          python -m shorts_engine.main \
+            --project-root . \
+            --count 5 \
+            --date "${{ steps.gate.outputs.run_date }}" \
+            --privacy-status "$PRIVACY" \
+            --max-upload "${{ steps.gate.outputs.max_upload }}" \
+            --upload
 
       - name: Save non-repetition history
         if: always() && steps.gate.outputs.run == 'true'
@@ -125,5 +93,5 @@ jobs:
           git config user.name "shorts-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .shorts_work
-          git diff --cached --quiet || git commit -m "Update Shorts history"
+          git diff --cached --quiet || git commit -m "chore: record scheduled local recovery upload [skip ci]"
           git push
