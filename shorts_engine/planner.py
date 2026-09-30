@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from datetime import date
@@ -15,6 +15,21 @@ THEME_POOLS = {
     "fruits": {"apple", "banana", "grapes", "lemon", "mango", "orange", "pineapple", "strawberry", "tomato", "watermelon"},
     "animals": {"cat", "dog", "dolphin", "elephant", "frog", "giraffe", "goat", "horse", "kangaroo", "koala", "lion", "monkey", "rabbit", "tiger", "turtle", "whale", "zebra"},
 }
+
+# Hindi letter-word mapping for SEO — matches reference channel style
+_HINDI = {
+    'a': 'अ से अनार', 'b': 'ब से बस', 'c': 'क से केला',
+    'd': 'ड से डमरू', 'e': 'ए से एक', 'f': 'फ से फूल',
+    'g': 'ग से गाय', 'h': 'ह से हाथी', 'i': 'इ से इमली',
+    'j': 'ज से जहाज', 'k': 'क से कमल', 'l': 'ल से लड्डू',
+    'm': 'म से मछली', 'n': 'न से नाव', 'o': 'ओ से ओखली',
+    'p': 'प से पंखा', 'q': 'क्यू से क्यूब', 'r': 'र से राजा',
+    's': 'स से सेब', 't': 'त से तोता', 'u': 'उ से उल्लू',
+    'v': 'व से वायुयान', 'w': 'व से वर्षा', 'x': 'एक्स से एक्स-रे',
+    'y': 'य से यात्री', 'z': 'ज़ से ज़ेबरा',
+}
+
+_DESC_TAGS = "#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids"
 
 
 @dataclass
@@ -64,88 +79,64 @@ def plan_batch(assets: list[Asset], history_path, count: int = 5, on_date: date 
                     letter = chr(ord("a") + start + offset)
                     candidates = [asset for asset in assets if asset.letter == letter]
                     chosen.append(rng.choice(candidates or assets))
-                title = (
-                    f"{chosen[0].letter.upper()} for {chosen[0].name} | "
-                    f"{chosen[1].letter.upper()} for {chosen[1].name} | "
-                    f"abcd | phonics song"
-                )
+                l0, l1, l2, l3 = chosen
+                n0, n1, n2, n3 = l0.name.lower(), l1.name.lower(), l2.name.lower(), l3.name.lower()
+                hindi = _HINDI.get(l0.letter.lower(), '')
+                # Title: "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short"
+                sequence = f"{l0.letter} for {n0} {l1.letter} for {n1} {l2.letter} for {n2}"
+                title = f"{l0.letter.upper()} for {n0} | {hindi} | abcd | phonics song | {sequence} #shorts #short"
                 desc = (
-                    f"{chosen[0].letter.upper()} for {chosen[0].name} | "
-                    f"{chosen[1].letter.upper()} for {chosen[1].name} | "
-                    f"{chosen[2].letter.upper()} for {chosen[2].name} | "
-                    f"{chosen[3].letter.upper()} for {chosen[3].name}\n\n"
-                    "Watch, sing, and say it aloud! Perfect for toddlers and preschoolers.\n\n"
-                    "#Shorts #ABCSong #PhonicsForKids #LearnABC #KidsEducation #AlphabetSong "
-                    "#KidsSong #MadeForKids #Preschool #Toddlers #PhonicsLesson #ABCKids "
-                    "#ChildrenSong #EnglishAlphabet #KindergartenLearning #abcd #phonicssong"
+                    f"{l0.letter.upper()} for {n0} | {l1.letter.upper()} for {n1} | "
+                    f"{l2.letter.upper()} for {n2} | {l3.letter.upper()} for {n3}\n\n"
+                    f"{_DESC_TAGS}"
                 )
             elif theme == "count":
                 pool = _pool(assets, THEME_POOLS["fruits"])
                 chosen = rng.sample(pool, min(4, len(pool)))
-                title = (
-                    f"1 for {chosen[0].name} | 2 for {chosen[1].name} | "
-                    f"counting song | kids learning"
-                )
+                n = [c.name.lower() for c in chosen]
+                sequence = f"1 for {n[0]} 2 for {n[1]} 3 for {n[2]}"
+                title = f"1 for {n[0]} | 2 for {n[1]} | counting song | {sequence} #shorts #short"
                 desc = (
-                    f"1 for {chosen[0].name} | 2 for {chosen[1].name} | "
-                    f"3 for {chosen[2].name} | 4 for {chosen[3].name}\n\n"
-                    "Fun counting practice for kids and toddlers.\n\n"
-                    "#Shorts #CountingSong #KidsLearning #NumbersForKids #MadeForKids "
-                    "#Preschool #Toddlers #KidsEducation #LearnNumbers #123Kids #counting"
+                    f"1 for {n[0]} | 2 for {n[1]} | 3 for {n[2]} | 4 for {n[3]}\n\n"
+                    f"#shorts #short #countingsong #kidslearning #numbersforkids #123kids #counting #preschool #toddlers #kidseducation"
                 )
             elif theme == "vehicles":
                 pool = _pool(assets, THEME_POOLS["vehicles"])
                 chosen = rng.sample(pool, min(4, len(pool)))
-                title = (
-                    f"{chosen[0].name} | {chosen[1].name} | "
-                    f"vehicles song | kids phonics"
-                )
+                n = [c.name.lower() for c in chosen]
+                sequence = f"{n[0]} {n[1]} {n[2]} {n[3]}"
+                title = f"{n[0]} | {n[1]} | vehicles song | {sequence} #shorts #short"
                 desc = (
-                    f"{chosen[0].name} | {chosen[1].name} | "
-                    f"{chosen[2].name} | {chosen[3].name}\n\n"
-                    "Sing along and learn about vehicles!\n\n"
-                    "#Shorts #VehicleSong #KidsLearning #MadeForKids #Preschool "
-                    "#Toddlers #KidsEducation #CarSong #VehiclesForKids #phonicssong"
+                    f"{n[0]} | {n[1]} | {n[2]} | {n[3]}\n\n"
+                    f"#shorts #short #vehiclesong #kidslearning #vehiclesforkids #preschool #toddlers #kidseducation #phonicssong"
                 )
             elif theme == "animals":
                 pool = _pool(assets, THEME_POOLS["animals"])
                 chosen = rng.sample(pool, min(4, len(pool)))
-                title = (
-                    f"{chosen[0].name} | {chosen[1].name} | "
-                    f"animal sounds | kids phonics song"
-                )
+                n = [c.name.lower() for c in chosen]
+                sequence = f"{n[0]} {n[1]} {n[2]} {n[3]}"
+                title = f"{n[0]} | {n[1]} | animal sounds | {sequence} #shorts #short"
                 desc = (
-                    f"{chosen[0].name} | {chosen[1].name} | "
-                    f"{chosen[2].name} | {chosen[3].name}\n\n"
-                    "Learn animal names and sounds!\n\n"
-                    "#Shorts #AnimalSong #KidsLearning #MadeForKids #Preschool "
-                    "#Toddlers #KidsEducation #AnimalsForKids #animalsounds #phonicssong"
+                    f"{n[0]} | {n[1]} | {n[2]} | {n[3]}\n\n"
+                    f"#shorts #short #animalsong #kidslearning #animalsforkids #preschool #toddlers #kidseducation #animalsounds"
                 )
             elif theme == "colors":
                 chosen = rng.sample(assets, min(4, len(assets)))
-                title = (
-                    f"{chosen[0].name} | {chosen[1].name} | "
-                    f"learn colors | kids song"
-                )
+                n = [c.name.lower() for c in chosen]
+                sequence = f"{n[0]} {n[1]} {n[2]} {n[3]}"
+                title = f"{n[0]} | {n[1]} | learn colors | {sequence} #shorts #short"
                 desc = (
-                    f"{chosen[0].name} | {chosen[1].name} | "
-                    f"{chosen[2].name} | {chosen[3].name}\n\n"
-                    "Learn colors with fun!\n\n"
-                    "#Shorts #ColorSong #KidsLearning #MadeForKids #Preschool "
-                    "#Toddlers #KidsEducation #LearnColors #ColorsForKids #kidssong"
+                    f"{n[0]} | {n[1]} | {n[2]} | {n[3]}\n\n"
+                    f"#shorts #short #colorsong #kidslearning #colorsforkids #preschool #toddlers #kidseducation #learncolors"
                 )
             else:
                 chosen = rng.sample(assets, min(4, len(assets)))
-                title = (
-                    f"{chosen[0].name} | {chosen[1].name} | "
-                    f"phonics quiz | kids learning"
-                )
+                n = [c.name.lower() for c in chosen]
+                sequence = f"{n[0]} {n[1]} {n[2]} {n[3]}"
+                title = f"{n[0]} | {n[1]} | phonics song | {sequence} #shorts #short"
                 desc = (
-                    f"{chosen[0].name} | {chosen[1].name} | "
-                    f"{chosen[2].name} | {chosen[3].name}\n\n"
-                    "Say each word aloud and learn!\n\n"
-                    "#Shorts #PhonicsQuiz #KidsLearning #MadeForKids #Preschool "
-                    "#Toddlers #KidsEducation #PhonicsForKids #KidsQuiz #phonicssong"
+                    f"{n[0]} | {n[1]} | {n[2]} | {n[3]}\n\n"
+                    f"{_DESC_TAGS}"
                 )
             signature = _signature(theme, chosen, style)
             if signature in known or any(plan.signature == signature for plan in result):
@@ -156,4 +147,3 @@ def plan_batch(assets: list[Asset], history_path, count: int = 5, on_date: date 
             raise RuntimeError("Could not find a non-repeating Shorts plan after 200 attempts")
         result.append(made)
     return result
-

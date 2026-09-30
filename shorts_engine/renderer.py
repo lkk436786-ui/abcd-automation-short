@@ -148,6 +148,36 @@ def render_thumbnail(project_root: Path, plan: ShortPlan, output_dir: Path) -> P
     return thumb
 
 
+def _append_fixed_thumbnail(project_root: Path, main_video: Path, output: Path) -> None:
+    """Appends 1 second of the fixed brand thumbnail to the end of the video.
+    This lets YouTube auto-generate it as a selectable thumbnail option."""
+    thumb_img = project_root / "assets" / "short_thumbnail.png"
+    if not thumb_img.exists():
+        shutil.copy2(str(main_video), str(output))
+        return
+    workdir = output.parent
+    thumb_clip = workdir / "_thumb_clip.mp4"
+    _run([
+        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-loop", "1", "-i", str(thumb_img),
+        "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
+        "-t", "1",
+        "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30,format=yuv420p",
+        "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
+        "-c:a", "aac", "-b:a", "128k", "-shortest",
+        str(thumb_clip),
+    ])
+    concat_txt = workdir / "_final_concat.txt"
+    concat_txt.write_text(f"file '{main_video.as_posix()}'\nfile '{thumb_clip.as_posix()}'\n", encoding="utf-8")
+    _run([
+        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-f", "concat", "-safe", "0", "-i", str(concat_txt),
+        "-c", "copy", "-movflags", "+faststart", str(output),
+    ])
+    thumb_clip.unlink(missing_ok=True)
+    concat_txt.unlink(missing_ok=True)
+
+
 def render_plan(project_root: Path, plan: ShortPlan, output: Path, keep_temporary: bool = False) -> dict:
     workdir = output.parent / f".{output.stem}_scenes"
     workdir.mkdir(parents=True, exist_ok=True)
@@ -170,7 +200,11 @@ def render_plan(project_root: Path, plan: ShortPlan, output: Path, keep_temporar
         scenes.append(scene)
     concat = workdir / "concat.txt"
     concat.write_text("".join(f"file '{scene.as_posix()}'\n" for scene in scenes), encoding="utf-8")
-    _run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(concat), "-c", "copy", "-movflags", "+faststart", str(output)])
+    # Render all scenes joined to a temp file, then append the fixed thumbnail frame
+    main_tmp = output.with_suffix(".main.mp4")
+    _run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(concat), "-c", "copy", "-movflags", "+faststart", str(main_tmp)])
+    _append_fixed_thumbnail(project_root, main_tmp, output)
+    main_tmp.unlink(missing_ok=True)
     thumbnail = render_thumbnail(project_root, plan, output.parent)
     manifest = {"signature": plan.signature, "title": plan.title, "theme": plan.theme, "output": str(output), "thumbnail": str(thumbnail), "assets": [asset.name for asset in plan.assets]}
     output.with_suffix(".json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
