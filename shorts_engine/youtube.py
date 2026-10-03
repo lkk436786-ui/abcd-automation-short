@@ -13,6 +13,35 @@ from googleapiclient.http import MediaFileUpload
 
 
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
+SHORT_HASHTAGS = "#Shorts #KidsShorts #Phonics #KidsLearning #EducationalShorts #LearnWithMe"
+BILINGUAL_DESCRIPTION = "Learn English words with clear pictures. बच्चों के लिए English words और pronunciation सीखें।"
+SHORT_TAGS = [
+    "phonics",
+    "abc song",
+    "alphabet",
+    "kids learning",
+    "abcd",
+    "phonics song",
+    "learn abc",
+    "kids education",
+    "preschool",
+    "kindergarten",
+    "toddlers",
+    "nursery rhyme",
+    "kids phonics",
+    "letter sounds",
+    "educational",
+    "Shorts",
+    "KidsShorts",
+    "youtube shorts",
+    "kids shorts",
+    "children",
+    "baby songs",
+    "abc kids",
+    "english alphabet",
+    "English for kids",
+    "Hindi learning",
+]
 
 
 def _credentials() -> Credentials:
@@ -26,9 +55,27 @@ def _credentials() -> Credentials:
     return creds
 
 
+def _shorts_description(description: str) -> str:
+    body = description.strip()[:4500]
+    parts = [part for part in (body, BILINGUAL_DESCRIPTION, SHORT_HASHTAGS) if part]
+    return "\n\n".join(parts)
+
+
+def _video_metadata(title: str, description: str, privacy_status: str) -> dict:
+    return {
+        "snippet": {
+            "title": title[:100],
+            "description": _shorts_description(description),
+            "categoryId": "27",
+            "tags": SHORT_TAGS,
+        },
+        "status": {"privacyStatus": privacy_status, "selfDeclaredMadeForKids": True},
+    }
+
+
 def upload(video: Path, title: str, description: str, privacy_status: str = "public", thumbnail: Path | None = None) -> str:
     youtube = build("youtube", "v3", credentials=_credentials(), cache_discovery=False)
-    body = {"snippet": {"title": title[:100], "description": description[:5000], "categoryId": "27", "tags": ["phonics", "abc song", "alphabet", "kids learning", "abcd", "phonics song", "learn abc", "kids education", "preschool", "kindergarten", "toddlers", "nursery rhyme", "kids phonics", "letter sounds", "educational", "Shorts", "youtube shorts", "kids shorts", "children", "baby songs", "abc kids", "english alphabet"]}, "status": {"privacyStatus": privacy_status, "selfDeclaredMadeForKids": True}}
+    body = _video_metadata(title, description, privacy_status)
     request = youtube.videos().insert(part="snippet,status", body=body, media_body=MediaFileUpload(str(video), mimetype="video/mp4", resumable=True, chunksize=4 * 1024 * 1024))
     for attempt in range(5):
         try:
@@ -50,4 +97,3 @@ def upload(video: Path, title: str, description: str, privacy_status: str = "pub
                 raise
             time.sleep(2 ** attempt)
     raise RuntimeError("Upload did not return a video ID")
-

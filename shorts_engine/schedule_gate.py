@@ -59,7 +59,8 @@ def _pending_batch_days(root: Path, today: date) -> list[str]:
         except ValueError:
             continue
         total_uploaded = sum(1 for status in data.get("status", {}).values() if status.get("status") == "uploaded")
-        if today - timedelta(days=2) <= day < today and total_uploaded < 5:
+        planned = len(data.get("plans", [])) or 5
+        if today - timedelta(days=2) <= day < today and total_uploaded < planned:
             pending.append(value)
     return pending
 

@@ -8,8 +8,12 @@ import sys
 
 from .catalog import scan_assets
 from .history import read_json, record, write_json
-from .planner import ShortPlan, plan_batch
+from .planner import FIXED_DESCRIPTION, FIXED_TITLE, ShortPlan, plan_batch
 from .renderer import render_plan
+
+
+def _serialize(plans: list[ShortPlan]) -> list[dict]:
+    return [{"signature": plan.signature, "theme": plan.theme, "title": plan.title, "description": plan.description, "style_index": plan.style_index, "asset_keys": [asset.key for asset in plan.assets]} for plan in plans]
 
 
 def main() -> int:
@@ -39,14 +43,27 @@ def main() -> int:
     if state.get("date") == run_date.isoformat() and state.get("plans"):
         try:
             for row in state["plans"]:
-                plans.append(ShortPlan(row["signature"], row["theme"], row["title"], row["description"], [asset_by_key[key] for key in row["asset_keys"]], int(row["style_index"])))
+                # Titles and descriptions are fixed channel-wide, so a batch saved before that
+                # change must not publish its stale metadata.
+                plans.append(ShortPlan(row["signature"], row["theme"], FIXED_TITLE, FIXED_DESCRIPTION, [asset_by_key[key] for key in row["asset_keys"]], int(row["style_index"])))
         except (KeyError, TypeError, ValueError):
             plans = []
+    if plans and len(plans) < args.count:
+        # A saved batch smaller than the requested count would otherwise cap the day forever.
+        signatures = {plan.signature for plan in plans}
+        for extra in plan_batch(assets, plan_history, count=args.count, on_date=run_date, seed=args.seed):
+            if len(plans) >= args.count:
+                break
+            if extra.signature not in signatures:
+                plans.append(extra)
+                signatures.add(extra.signature)
+        state["plans"] = _serialize(plans)
+        write_json(batch_path, state)
     if not plans:
         plans = plan_batch(assets, plan_history, count=args.count, on_date=run_date, seed=args.seed)
         state = {
             "date": run_date.isoformat(),
-            "plans": [{"signature": plan.signature, "theme": plan.theme, "title": plan.title, "description": plan.description, "style_index": plan.style_index, "asset_keys": [asset.key for asset in plan.assets]} for plan in plans],
+            "plans": _serialize(plans),
             "status": {},
         }
         write_json(batch_path, state)

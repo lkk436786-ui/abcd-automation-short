@@ -31,6 +31,13 @@ _HINDI = {
 
 _DESC_TAGS = "#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids"
 
+# Fixed title and description — same for every video, matching reference channel exactly
+FIXED_TITLE = "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short"
+FIXED_DESCRIPTION = (
+    "A for apple | B for ball | C for cat | D for dog\n\n"
+    f"{_DESC_TAGS}"
+)
+
 
 @dataclass
 class ShortPlan:
@@ -87,12 +94,8 @@ def plan_batch(assets: list[Asset], history_path, count: int = 5, on_date: date 
                 chosen = rng.sample(_pool(assets, THEME_POOLS["animals"]), min(4, len(_pool(assets, THEME_POOLS["animals"]))))
             else:
                 chosen = rng.sample(assets, min(4, len(assets)))
-            # Fixed title and description — same for every video, matching reference channel exactly
-            title = "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short"
-            desc = (
-                "A for apple | B for ball | C for cat | D for dog\n\n"
-                f"{_DESC_TAGS}"
-            )
+            title = FIXED_TITLE
+            desc = FIXED_DESCRIPTION
             signature = _signature(theme, chosen, style)
             if signature in known or any(plan.signature == signature for plan in result):
                 continue
