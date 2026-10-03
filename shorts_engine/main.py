@@ -17,6 +17,13 @@ def _serialize(plans: list[ShortPlan]) -> list[dict]:
 
 
 def main() -> int:
+    # Titles carry Devanagari, and a cp1252 console turns a post-upload print into an
+    # exception that reports an upload that already succeeded as a failure.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
     parser = argparse.ArgumentParser(description="Generate and optionally upload daily vertical Shorts")
     parser.add_argument("--project-root", type=Path, default=Path("."))
     parser.add_argument("--count", type=int, default=5)
