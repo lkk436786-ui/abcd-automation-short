@@ -69,9 +69,9 @@
   ],
   "status": {
     "quiz|octopus,uniform,xrayfish,turtle|style-1": {
-      "status": "rendered",
-      "youtube_video_id": null,
-      "file": "C:\\Users\\prajyot\\Documents\\Youtube\\kids-phonics-engine\\shorts_outputs\\2026-10-03\\short-01.mp4"
+      "status": "uploaded",
+      "youtube_video_id": "7FN9jCfp6VI",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-03/short-01.mp4"
     },
     "abc|piano,quilt,robot,strawberry|style-2": {
       "status": "uploaded",
@@ -87,6 +87,11 @@
       "status": "uploaded",
       "youtube_video_id": "7guCKDcFrAU",
       "file": "C:\\Users\\prajyot\\Documents\\Youtube\\kids-phonics-engine\\shorts_outputs\\2026-10-03\\short-04.mp4"
+    },
+    "animals|tiger,rabbit,kangaroo,koala|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "e49zMw_4suU",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-03/short-05.mp4"
     }
   }
 }
