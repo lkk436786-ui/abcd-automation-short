@@ -77,6 +77,21 @@
       "status": "uploaded",
       "youtube_video_id": "0Itact74nwU",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-04/short-02.mp4"
+    },
+    "count|tomato,orange,apple,banana|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "k6QJxJCMoUo",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-04/short-03.mp4"
+    },
+    "vehicles|bus,motorcycle,van,firetruck|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "JmKHjic-50E",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-04/short-04.mp4"
+    },
+    "animals|turtle,koala,dog,giraffe|style-3": {
+      "status": "uploaded",
+      "youtube_video_id": "5y5SMWZ-vuo",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-04/short-05.mp4"
     }
   }
 }
