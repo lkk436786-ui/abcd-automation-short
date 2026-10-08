@@ -82,6 +82,16 @@
       "status": "uploaded",
       "youtube_video_id": "i4ZLNuzEQjg",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-08/short-03.mp4"
+    },
+    "vehicles|van,bus,ship,firetruck|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "TeYhr7OS638",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-08/short-04.mp4"
+    },
+    "animals|giraffe,whale,monkey,koala|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "gCYMS5Veqf4",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-08/short-05.mp4"
     }
   }
 }
