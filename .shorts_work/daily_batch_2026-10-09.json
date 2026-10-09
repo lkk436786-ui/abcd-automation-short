@@ -72,6 +72,11 @@
       "status": "uploaded",
       "youtube_video_id": "6LkK0xEG8VQ",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-09/short-01.mp4"
+    },
+    "abc|koala,lamp,mango,net|style-3": {
+      "status": "uploaded",
+      "youtube_video_id": "sr53kdRMmUw",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-09/short-02.mp4"
     }
   }
 }
