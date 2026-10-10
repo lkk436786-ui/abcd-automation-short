@@ -72,6 +72,11 @@
       "status": "uploaded",
       "youtube_video_id": "GXKlH8YDrpI",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-10/short-01.mp4"
+    },
+    "abc|egg,fan,gift,helicopter|style-0": {
+      "status": "uploaded",
+      "youtube_video_id": "U3ZCchoAVlM",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-10/short-02.mp4"
     }
   }
 }
