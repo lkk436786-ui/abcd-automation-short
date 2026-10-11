@@ -72,6 +72,11 @@
       "status": "uploaded",
       "youtube_video_id": "57zdlacTJCE",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-11/short-01.mp4"
+    },
+    "abc|bee,cake,donut,eagle|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "iFF9T0BT_oY",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-11/short-02.mp4"
     }
   }
 }
