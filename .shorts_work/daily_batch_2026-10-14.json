@@ -82,6 +82,11 @@
       "status": "uploaded",
       "youtube_video_id": "hkv38hdswho",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-14/short-04.mp4"
+    },
+    "animals|dog,whale,elephant,giraffe|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "mZrfS7XPtFo",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-14/short-05.mp4"
     }
   }
 }
