@@ -77,6 +77,11 @@
       "status": "uploaded",
       "youtube_video_id": "CYWcSU7BC8k",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-14/short-03.mp4"
+    },
+    "vehicles|jeep,ship,helicopter,car|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "hkv38hdswho",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-14/short-04.mp4"
     }
   }
 }
