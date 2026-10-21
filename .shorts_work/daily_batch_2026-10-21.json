@@ -77,6 +77,11 @@
       "status": "uploaded",
       "youtube_video_id": "uD-cHaU8EWI",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-21/short-03.mp4"
+    },
+    "vehicles|train,rocket,yellowbus,scooter|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "25DWZxtuOJY",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-21/short-04.mp4"
     }
   }
 }
