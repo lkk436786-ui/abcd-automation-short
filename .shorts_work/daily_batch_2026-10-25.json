@@ -82,6 +82,16 @@
       "status": "uploaded",
       "youtube_video_id": "sgAc-_PCf9Q",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-25/short-03.mp4"
+    },
+    "vehicles|van,motorcycle,scooter,car|style-3": {
+      "status": "uploaded",
+      "youtube_video_id": "keZ4CTs1wpQ",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-25/short-04.mp4"
+    },
+    "animals|giraffe,elephant,zebra,frog|style-0": {
+      "status": "uploaded",
+      "youtube_video_id": "e4V8UmCygzI",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-25/short-05.mp4"
     }
   }
 }
