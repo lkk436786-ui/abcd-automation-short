@@ -82,6 +82,11 @@
       "status": "uploaded",
       "youtube_video_id": "H4yb_NXLv0E",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-26/short-04.mp4"
+    },
+    "animals|horse,elephant,whale,kangaroo|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "Sn3WgQMdbBE",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-26/short-05.mp4"
     }
   }
 }
