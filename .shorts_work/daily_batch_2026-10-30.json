@@ -87,6 +87,11 @@
       "status": "uploaded",
       "youtube_video_id": "ne7k0mivwxQ",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-30/short-04.mp4"
+    },
+    "animals|whale,horse,goat,monkey|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "mfvALph41Z8",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-10-30/short-05.mp4"
     }
   }
 }
