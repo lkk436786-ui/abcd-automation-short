@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-05",
+  "plans": [
+    {
+      "signature": "quiz|icecream,igloo,house,ink|style-0",
+      "theme": "quiz",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 0,
+      "asset_keys": [
+        "icecream",
+        "igloo",
+        "house",
+        "ink"
+      ]
+    },
+    {
+      "signature": "abc|kite,lemon,mango,necklace|style-1",
+      "theme": "abc",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 1,
+      "asset_keys": [
+        "kite",
+        "lemon",
+        "mango",
+        "necklace"
+      ]
+    },
+    {
+      "signature": "count|banana,orange,watermelon,mango|style-2",
+      "theme": "count",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 2,
+      "asset_keys": [
+        "banana",
+        "orange",
+        "watermelon",
+        "mango"
+      ]
+    },
+    {
+      "signature": "vehicles|train,van,bus,jeep|style-3",
+      "theme": "vehicles",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 3,
+      "asset_keys": [
+        "train",
+        "van",
+        "bus",
+        "jeep"
+      ]
+    },
+    {
+      "signature": "animals|dog,giraffe,whale,dolphin|style-0",
+      "theme": "animals",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 0,
+      "asset_keys": [
+        "dog",
+        "giraffe",
+        "whale",
+        "dolphin"
+      ]
+    }
+  ],
+  "status": {
+    "quiz|icecream,igloo,house,ink|style-0": {
+      "status": "uploaded",
+      "youtube_video_id": "rKcFBxMnBTM",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-05/short-01.mp4"
+    },
+    "abc|kite,lemon,mango,necklace|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "yS29H3AaMH4",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-05/short-02.mp4"
+    }
+  }
+}
