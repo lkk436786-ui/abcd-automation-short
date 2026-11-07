@@ -77,6 +77,11 @@
       "status": "uploaded",
       "youtube_video_id": "nCpwusiD9tM",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-07/short-02.mp4"
+    },
+    "count|strawberry,mango,pineapple,watermelon|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "lSoeVe63rFA",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-07/short-03.mp4"
     }
   }
 }
