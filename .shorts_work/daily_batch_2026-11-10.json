@@ -87,6 +87,11 @@
       "status": "uploaded",
       "youtube_video_id": "w6zBO2HynQc",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-10/short-04.mp4"
+    },
+    "animals|horse,kangaroo,tiger,giraffe|style-0": {
+      "status": "uploaded",
+      "youtube_video_id": "NR9E1K8Etro",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-10/short-05.mp4"
     }
   }
 }
