@@ -82,6 +82,16 @@
       "status": "uploaded",
       "youtube_video_id": "tcetwM6NPuo",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-13/short-03.mp4"
+    },
+    "vehicles|bus,helicopter,firetruck,jeep|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "B43xIJyXjEU",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-13/short-04.mp4"
+    },
+    "animals|dolphin,frog,tiger,elephant|style-3": {
+      "status": "uploaded",
+      "youtube_video_id": "r4hdXOaBCkU",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-13/short-05.mp4"
     }
   }
 }
