@@ -87,6 +87,11 @@
       "status": "uploaded",
       "youtube_video_id": "OvW1U-t1hcQ",
       "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-20/short-04.mp4"
+    },
+    "animals|koala,elephant,lion,dog|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "a4-xglJlHhQ",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-20/short-05.mp4"
     }
   }
 }
