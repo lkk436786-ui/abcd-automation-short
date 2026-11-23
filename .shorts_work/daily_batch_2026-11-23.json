@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-23",
+  "plans": [
+    {
+      "signature": "quiz|tomato,piano,zebu,yellowbus|style-0",
+      "theme": "quiz",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 0,
+      "asset_keys": [
+        "tomato",
+        "piano",
+        "zebu",
+        "yellowbus"
+      ]
+    },
+    {
+      "signature": "abc|horse,ink,jeep,kite|style-1",
+      "theme": "abc",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 1,
+      "asset_keys": [
+        "horse",
+        "ink",
+        "jeep",
+        "kite"
+      ]
+    },
+    {
+      "signature": "count|banana,pineapple,orange,strawberry|style-2",
+      "theme": "count",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 2,
+      "asset_keys": [
+        "banana",
+        "pineapple",
+        "orange",
+        "strawberry"
+      ]
+    },
+    {
+      "signature": "vehicles|van,helicopter,rocket,yellowbus|style-3",
+      "theme": "vehicles",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 3,
+      "asset_keys": [
+        "van",
+        "helicopter",
+        "rocket",
+        "yellowbus"
+      ]
+    },
+    {
+      "signature": "animals|elephant,turtle,kangaroo,giraffe|style-0",
+      "theme": "animals",
+      "title": "A for apple | अ से अनार | abcd | phonics song | a for apple b for ball c for cat #shorts #short",
+      "description": "A for apple | B for ball | C for cat | D for dog\n\n#abcd #phonicssong #shorts #short #kidslearning #alphabetsong #abcsong #preschool #toddlers #kidseducation #phonic #alphabet #abcdforkids",
+      "style_index": 0,
+      "asset_keys": [
+        "elephant",
+        "turtle",
+        "kangaroo",
+        "giraffe"
+      ]
+    }
+  ],
+  "status": {
+    "quiz|tomato,piano,zebu,yellowbus|style-0": {
+      "status": "uploaded",
+      "youtube_video_id": "O_mYNI01thU",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-23/short-01.mp4"
+    },
+    "abc|horse,ink,jeep,kite|style-1": {
+      "status": "uploaded",
+      "youtube_video_id": "7ujfHVfrKSw",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-23/short-02.mp4"
+    },
+    "count|banana,pineapple,orange,strawberry|style-2": {
+      "status": "uploaded",
+      "youtube_video_id": "HMBr4CQP9bk",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-23/short-03.mp4"
+    },
+    "vehicles|van,helicopter,rocket,yellowbus|style-3": {
+      "status": "uploaded",
+      "youtube_video_id": "38SbGzLlnmM",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-23/short-04.mp4"
+    },
+    "animals|elephant,turtle,kangaroo,giraffe|style-0": {
+      "status": "uploaded",
+      "youtube_video_id": "I03qeRGJ7aA",
+      "file": "/home/runner/work/abcd-automation-short/abcd-automation-short/shorts_outputs/2026-11-23/short-05.mp4"
+    }
+  }
+}
